@@ -1,30 +1,26 @@
-// pubsubModel.js
+//pubsModel.js
 
-class PubSubModel {
-    constructor() {
-      this.topics = {};
-    }
-  
-    subscribe(topicId, subscriberId) {
-      if (!this.topics[topicId]) {
-        this.topics[topicId] = new Set();
-      }
-      this.topics[topicId].add(subscriberId);
-    }
-  
-    unsubscribe(topicId, subscriberId) {
-      if (this.topics[topicId]) {
-        this.topics[topicId].delete(subscriberId);
-        if (this.topics[topicId].size === 0) {
-          delete this.topics[topicId];
-        }
-      }
-    }
-  
-    getSubscribers(topicId) {
-      return this.topics[topicId] || new Set();
+const subscriptions = {};
+
+function subscribe(topicId, subscriberId) {
+  if (!subscriptions[topicId]) {
+    subscriptions[topicId] = new Set();
+  }
+  subscriptions[topicId].add(subscriberId);
+}
+
+function unsubscribe(topicId, subscriberId) {
+  const subscribers = subscriptions[topicId];
+  if (subscribers) {
+    subscribers.delete(subscriberId);
+    if (subscribers.size === 0) {
+      delete subscriptions[topicId];
     }
   }
-  
-  module.exports = PubSubModel;
-  
+}
+
+function getSubscribers(topicId) {
+  return subscriptions[topicId] || new Set();
+}
+
+module.exports = { subscribe, unsubscribe, getSubscribers };
