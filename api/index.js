@@ -2,8 +2,8 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const pubsubRoutes = require('./src/routes/pubsubRoutes');
-const { errorHandler } = require('./src/middlewares/errorMiddleware');
+const pubsubRoutes = require('../src/routes/pubsubRoutes');
+const { errorHandler } = require('../src/middlewares/errorMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
